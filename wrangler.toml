@@ -1,0 +1,23 @@
+name = "twitter-analytics-on-cloudflare"
+main = "src/index.js"
+compatibility_date = "2022-08-25"
+account_id = "93ff523463821408b1e16cb2a064f3c7"
+node_compat = true 
+
+[triggers]
+crons = [ "* * * * *" ]
+
+[vars]
+SINCE_ID = "1562140227216572416"
+USER_ID = "1369508398417518593"
+
+
+[[kv_namespaces]]
+binding = "TWITTER_METRICS_KV"
+id = "b49abaded78744658ffeead880dc8fad"
+preview_id = "e7bfb9c813c443b98d240d5383bd827e"
+
+[[kv_namespaces]]
+binding = "TWITTER_VIEWS_KV"
+id = "c3c0b9c1180b4a089dc9d92054ae794f"
+preview_id = "19888e731f8c4ddbb4f433ad20595c44j"
