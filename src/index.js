@@ -44,7 +44,7 @@ async function logMetrics(tweet, env) {
 		console.log("Saving new metrics", tweet.id)
 		let myResp = await env.TWITTER_METRICS_KV.put(tweet.id, tweet_payload)
 	} else {
-		console.log("Objects Match", current)
+		console.log("Objects Match", tweet.id)
 	}
 	return true
 }
