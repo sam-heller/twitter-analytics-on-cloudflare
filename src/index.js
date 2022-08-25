@@ -39,7 +39,7 @@ async function logMetrics(tweet, env) {
 		let new_views = tweet.organic_metrics.impression_count - current.organic_metrics.impression_count
 		if (new_views > 0){
 			console.log("Recording new views", tweet.id)
-			 await env.TWITTER_VIEWS_KV.put(`${impression_time}.${tweet.id}`, new_views)
+			let throwAway = await env.TWITTER_VIEWS_KV.put(`${impression_time}.${tweet.id}`, new_views)
 		}
 		console.log("Saving new metrics", tweet.id)
 		let myResp = await env.TWITTER_METRICS_KV.put(tweet.id, tweet_payload)

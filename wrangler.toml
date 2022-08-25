@@ -3,6 +3,7 @@ main = "src/index.js"
 compatibility_date = "2022-08-25"
 account_id = "93ff523463821408b1e16cb2a064f3c7"
 node_compat = true 
+usage_model = "bundled"
 
 [triggers]
 crons = [ "* * * * *" ]
