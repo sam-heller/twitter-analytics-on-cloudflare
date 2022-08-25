@@ -29,28 +29,23 @@ async function logMetrics(tweet, env) {
 	let impression_time = new Date().getTime()
 	let tweet_payload = JSON.stringify(tweet)
 	let current = await env.TWITTER_METRICS_KV.get(tweet.id, {type: 'json'})
-	if (current === null){
-		console.log("New tweet", tweet.id)
-		current = tweet;
-		current.organic_metrics = blankMetrics()
-	}
-
+	current = current === null ? {id: tweet.id, text: tweet.text, organic_metrics: blankMetrics()} : current
 	if (objectsAreDifferent(tweet, current)){
 		let new_views = tweet.organic_metrics.impression_count - current.organic_metrics.impression_count
 		if (new_views > 0){
 			console.log("Recording new views", tweet.id)
-			let throwAway = await env.TWITTER_VIEWS_KV.put(`${impression_time}.${tweet.id}`, new_views)
+			let savedViews = await env.TWITTER_VIEWS_KV.put(`${impression_time}.${tweet.id}`, JSON.stringify({new_impressions: new_views.toString()}) )
+			// console.log(savedViews)
 		}
 		console.log("Saving new metrics", tweet.id)
-		let myResp = await env.TWITTER_METRICS_KV.put(tweet.id, tweet_payload)
-	} else {
-		console.log("Objects Match", tweet.id)
+		let newMetrics = await env.TWITTER_METRICS_KV.put(tweet.id, tweet_payload)
+		// console.log(newMetrics)
 	}
 	return true
 }
 
 function objectsAreDifferent(one, two){
-	return JSON.stringify(one) === JSON.stringify(two)
+	return JSON.stringify(one) !== JSON.stringify(two)
 }
 
 function blankMetrics(){
